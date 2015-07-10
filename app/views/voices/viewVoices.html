@@ -1,0 +1,47 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voices of Singapore</title>
+    <script>
+        $(document).ready(function() {
+            // run the first time; all subsequent calls will take care of themselves
+            setTimeout(worker, 1000);
+        });
+
+        var highestID = 0;
+        var queue = [];
+        function worker() {
+            $.ajax({
+                url: 'getVoices/',
+                success: function(data) {
+
+                    //alert(data.length);
+
+                    for (i = 0; i < data.length ; i++ ){
+                        if (data[i].id > highestID){
+                            highestID = data[i].id
+                            queue.push(data[i]);
+                        };
+                    }
+
+                    alert(queue.length);
+
+                    //$('#div1').html(parsedJson.count);
+                },
+                complete: function() {
+                    // Schedule the next request when the current one's complete
+                    setTimeout(worker, 5000);
+                }
+            });
+        };
+    </script>
+
+</head>
+<body>
+Voices of Singapore
+
+<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+
+</body>
+</html>
