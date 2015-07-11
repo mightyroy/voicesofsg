@@ -3,45 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Voices of Singapore</title>
-    <script>
-        $(document).ready(function() {
-            // run the first time; all subsequent calls will take care of themselves
-            setTimeout(worker, 1000);
-        });
-
-        var highestID = 0;
-        var queue = [];
-        function worker() {
-            $.ajax({
-                url: 'getVoices/',
-                success: function(data) {
-
-                    //alert(data.length);
-
-                    for (i = 0; i < data.length ; i++ ){
-                        if (data[i].id > highestID){
-                            highestID = data[i].id
-                            queue.push(data[i]);
-                        };
-                    }
-
-                    alert(queue.length);
-
-                    //$('#div1').html(parsedJson.count);
-                },
-                complete: function() {
-                    // Schedule the next request when the current one's complete
-                    setTimeout(worker, 5000);
-                }
-            });
-        };
-    </script>
 
 </head>
 <body>
-Voices of Singapore
+Voices of Singapore <br><br>
 
-<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+<div id="jsonWindow">Let jQuery AJAX Change This Text</div><br>
+
+<div id="rawJsonWindow">Raw JSON </div>
+
+
+<div id="container" style="position: relative; width: 500px; height: 300px;"></div>
 
 </body>
+
+<script>
+
+
+
+
+    var jsonwindow = document.getElementById("jsonWindow");
+    var rawjsonwindow = document.getElementById("rawJsonWindow");
+    //ajax call to get json
+    $(document).ready(function() {
+        // run the first time; all subsequent calls will take care of themselves
+        setTimeout(worker, 1000);
+    });
+
+    var highestID = 0;
+    var queue = [];
+    function worker() {
+        $.ajax({
+            url: 'getVoices/',
+            success: function(data,status, jqXHR) {
+
+                //alert(data.length);
+                //alert(jqXHR.responseText);
+                rawjsonwindow.innerHTML = jqXHR.responseText;
+
+                for (i = 0; i < data.length ; i++ ){
+                    if (data[i].id > highestID){
+                        highestID = data[i].id
+                        queue.push(data[i]);
+                    };
+                }
+
+                //alert(queue.length);
+                jsonwindow.innerHTML = "";
+                for (i = 0 ; i< queue.length ; i++ ) {
+                    jsonwindow.innerHTML += "ID=" + queue[i].id + " Text="+ queue[i].text + "<br> "  ;
+                }
+
+                //$('#div1').html(parsedJson.count);
+            },
+            complete: function() {
+                // Schedule the next request when the current one's complete
+                setTimeout(worker, 5000);
+            }
+        });
+    };
+</script>
+
 </html>
