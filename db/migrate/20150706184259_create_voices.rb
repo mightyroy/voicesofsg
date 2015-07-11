@@ -4,8 +4,7 @@ class CreateVoices < ActiveRecord::Migration
       t.string :text
       t.float :locationX
       t.float :locationY
-      t.integer :emotion
-      t.datetime :time
+      t.integer :votes
       t.timestamps null: false
     end
   end

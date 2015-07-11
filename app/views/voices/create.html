@@ -1,14 +1,23 @@
 
-Create Voice
+
+<div>
+
+
+<div id="title"> Voices of Singapore </div>
+
 
 <%= form_for :voice do |f| %>
 
-
+<div id="innerDiv"
     <p>
-        <%= f.text_area :text, :id => "textbox" %>
+        <%= f.text_area :text, :id => "textbox" , :maxlength => 90 %>
     </p>
-
+    <div id="error"> <%= @voice.errors.full_messages.first if @voice.errors.any?  %> </div>
     <p>
-        <%= f.submit "Submit" %>
+        <%= f.submit "Say it!" , :class => "alizarin-flat-button" %>
     </p>
 <% end %>
+    </div>
+
+    <%= image_tag "iphoneSmall.png" %>
+</div>

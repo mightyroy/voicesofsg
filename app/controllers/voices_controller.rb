@@ -12,7 +12,6 @@ class VoicesController < ApplicationController
 
   def submit
     @voice = Voice.new(voice_params)
-    @voice.time = Time.now
     if @voice.save
       redirect_to :action => "create", :alert => "Sumbit Success"
     else

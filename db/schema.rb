@@ -13,12 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20150706184259) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "voices", force: :cascade do |t|
     t.string   "text"
     t.float    "locationX"
     t.float    "locationY"
-    t.integer  "emotion"
-    t.datetime "time"
+    t.integer  "votes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
