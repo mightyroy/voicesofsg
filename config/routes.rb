@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'create/' => 'voices#create'
   post 'create/' => 'voices#submit'
   get 'getVoices/' => 'voices#getVoices'
+  get 'threejstemplate/' => 'voices#threejstemplate'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

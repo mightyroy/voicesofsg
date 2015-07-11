@@ -1,5 +1,9 @@
 class VoicesController < ApplicationController
 
+  def threejstemplate
+
+  end
+
   def getVoices
     @latestVoices =Voice.where("created_at >= ?", Time.zone.now.beginning_of_day)
     render :json => @latestVoices

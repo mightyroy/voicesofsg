@@ -14,4 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.turbolinks
-//= require_tree .
+//= require three.min
+//= require VRControls
+//= require VREffect
+//= require d3
