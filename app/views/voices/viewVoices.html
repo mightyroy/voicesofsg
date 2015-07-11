@@ -34,7 +34,7 @@ Voices of Singapore <br><br>
     var queue = [];
     function worker() {
         $.ajax({
-            url: 'getVoices/',
+            url: '/getVoices/',
             success: function(data,status, jqXHR) {
 
                 //alert(data.length);
