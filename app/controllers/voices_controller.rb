@@ -1,7 +1,22 @@
 class VoicesController < ApplicationController
 
-  def threejstemplate
+  def applewatchsubmit
+    @voice = Voice.new(voice_params)
+    if @voice.save
+      redirect_to :action => "applewatch", :alert => "Sumbit Success"
+    else
+      render :applewatch
+    end
+  end
 
+  def applewatch
+    @voice = Voice.new
+  end
+
+  def threejstemplate
+  end
+
+  def maptest
   end
 
   def getVoices

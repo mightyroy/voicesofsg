@@ -18,3 +18,5 @@
 //= require VRControls
 //= require VREffect
 //= require d3
+//= require topojson
+//= require datamaps

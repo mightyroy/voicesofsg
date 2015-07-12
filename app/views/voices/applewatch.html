@@ -1,0 +1,39 @@
+
+
+<div>
+
+    <%= image_tag("watchwithoutbuttons") %>
+
+    <%= form_for :voice do |f| %>
+    <%= f.hidden_field :text, :value => "@happy" %>
+
+    <%= f.submit "" , :id => "applewatchhappy"  %>
+    <% end %>
+
+    <%= form_for :voice do |f| %>
+    <%= f.hidden_field :text, :value => "@saddd" %>
+
+    <%= f.submit "" , :id => "applewatchsad"  %>
+    <% end %>
+
+    <%= form_for :voice do |f| %>
+    <%= f.hidden_field :text, :value => "@relax" %>
+
+    <%= f.submit "", :id => "applewatchrelax"  %>
+    <% end %>
+
+    <%= form_for :voice do |f| %>
+    <%= f.hidden_field :text, :value => "@angry" %>
+
+    <%= f.submit "" , :id => "applewatchangry"  %>
+    <% end %>
+
+
+</div>
+
+<style>
+    body {
+    background-color: #EEEEEE;
+}</style>
+
+
