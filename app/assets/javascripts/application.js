@@ -15,12 +15,4 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.turbolinks
-//= require three.min
-//= require VRControls
-//= require OrbitControls
-//= require VREffect
-//= require OBJLoader
-//= require tween.min
-//= require CSS3DRenderer
-//= require TrackballControls
-//= require main.js
+
