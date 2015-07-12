@@ -18,5 +18,5 @@ Rails.application.config.assets.precompile += %w( TrackballControls.js )
 Rails.application.config.assets.precompile += %w( tween.min.js )
 Rails.application.config.assets.precompile += %w( VRControls.js )
 Rails.application.config.assets.precompile += %w( VREffect.js )
-Rails.application.config.assets.precompile += %w( main.js )
+#Rails.application.config.assets.precompile += %w( main.js )
 
