@@ -5,8 +5,11 @@ class VoicesController < ApplicationController
     render :json => @@data
   end
 
-  def index
+  def vr
 
+  end
+
+  def viewVoices
   end
 
   def upvote

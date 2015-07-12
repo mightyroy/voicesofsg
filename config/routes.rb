@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'voices#viewVoices'
+  root 'voices#vr'
 
   get 'population2014/' => 'voices#population2014'
-  get 'index/' => 'voices#index'
+  get 'viewVoices/' => 'voices#viewVoices'
   get 'downvotevoice/:id' => 'voices#downvote'
   get 'upvotevoice/:id' => 'voices#upvote'
   get 'applewatch/' => 'voices#applewatch'
