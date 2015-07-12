@@ -6,7 +6,7 @@ var USE_VR = false;
 var CSS_ALPHA = 0.6;
 
 var g_mapScaleFactor = 400;
-
+var initialFill = true;
 
 //-----------------Ajax call to retrieve voices
 
@@ -33,20 +33,61 @@ function worker() {
                 //table[i][0] = data[i].text;
                 //console.log(data[i].text);
                 //table[i][1] = data[i].id;
-                if (data[i].id > highestID){
-
-                    if (m_cssObjects.length >= 150)
+                if (data[i].id > highestID)
+                {
+                    if (initialFill == true)
                     {
-                        var garbage = m_cssObjects.shift();
 
-                        sceneCSS.remove(garbage);
+                         if (m_cssObjects.length >= 150)
+                         {
+                            var garbage = m_cssObjects.shift();
 
+                            sceneCSS.remove(garbage);
+                         }
+                         //queue.push(data[i]);
+                         AddsceneCSSElementsIndividual(data[i].id,data[i].text);
+
+                        highestID = data[i].id;
                     }
-                    //queue.push(data[i]);
-                    AddsceneCSSElementsIndividual(data[i].id,data[i].text);
-                    highestID = data[i].id;
+                    else {
+                        if ((m_cssObjects.length + m_cssObjectsTemp.length) >= 150) {
+
+
+
+                            if (m_cssObjects.length > 0) {
+                                var garbage = m_cssObjects.shift();
+
+                                sceneCSS.remove(garbage);
+                                AddsceneCSSElementsTemp(data[i].id, data[i].text);
+                            }
+                            else {
+                                var garbage = m_cssObjectsTemp.shift();
+
+                                sceneCSS.remove(garbage);
+                                AddsceneCSSElementsTemp(data[i].id, data[i].text);
+                            }
+                        }
+                        else {
+                            AddsceneCSSElementsTemp(data[i].id, data[i].text);
+                        }
+
+                        /*
+                         if (m_cssObjects.length >= 150)
+                         {
+                         var garbage = m_cssObjects.shift();
+
+                         sceneCSS.remove(garbage);
+
+                         }
+                         //queue.push(data[i]);
+                         AddsceneCSSElementsIndividual(data[i].id,data[i].text);
+                         */
+                        highestID = data[i].id;
+                    }
                 };
             }
+
+            initialFill = false;
 
             //alert(queue.length);
             //jsonwindow.innerHTML = "";
@@ -54,9 +95,11 @@ function worker() {
             //    jsonwindow.innerHTML += "ID=" + queue[i].id + " Text="+ queue[i].text + "<br> "  ;
             //}
 
+
             //$('#div1').html(parsedJson.count);
         },
         complete: function() {
+
             // Schedule the next request when the current one's complete
             setTimeout(worker, 5000);
         }
@@ -87,9 +130,11 @@ var raycaster;
 var g_time = 0;
 
 var m_cssObjects = [];
+var m_cssObjectsTemp = [];
 var targets = { table: [], sphere: [], helix: [], grid: [] };
 
 var effect;
+
 
 // ===================================================================================================
 // Main function
@@ -204,7 +249,8 @@ function onMouseMove( event )
 	mouse.y = 1 - 2 * ( event.clientY / window.innerHeight );
 }
 
-// =================================================================================================== 
+// ===================================================================================================
+
 function onMouseDown( event )
 {
     if (m_intersectMapObjectNum > 0)
@@ -219,6 +265,10 @@ function onMouseDown( event )
                 var popBox = document.getElementById("populationDisplay");
                 popBox.innerHTML = populationArray[m_intersectMapObjectName ]["district"] + "<br>" +populationArray[m_intersectMapObjectName ]["population"] + " people" ;
                 //window.alert(populationArray[m_intersectMapObjectName ]["district"]);
+
+
+
+
             }
         });
     }
@@ -227,6 +277,10 @@ function onMouseDown( event )
         //console.log("No region selected!");
     }
 }
+//========================likelisteners
+    var likelistener = function(event){
+
+    }
 
 // ===================================================================================================  
 function buildAxes( length ) {
@@ -282,6 +336,9 @@ function AddLights()
 // ===================================================================================================    
 function Animate() 
 {
+    // Animate CSS temp objects
+    AnimateCSSTemp();
+
     // Rotate the comment m_cssObjects about the center
     RotateCommentObjects();
 
@@ -299,6 +356,63 @@ function Animate()
 
     requestAnimationFrame(Animate);
     controls.update();
+}
+
+
+// ===================================================================================================
+function AnimateCSSTemp()
+{
+    // Get the orientation of the camera
+    t_camRotation = camera.rotation;
+    var x = t_camRotation.x;
+    var y = t_camRotation.y;
+    var z = t_camRotation.z;
+
+    var t_zaxis = new THREE.Vector3();
+    t_zaxis.x = Math.sin(y);
+    t_zaxis.y = -Math.cos(y) * Math.sin(x);
+    t_zaxis.z = Math.cos(x) * Math.cos(y);
+
+
+    var t_yaxis = new THREE.Vector3();
+    t_yaxis.x = -Math.cos(y) * Math.sin(z);
+    t_yaxis.y = Math.cos(x) * Math.cos(z) - Math.sin(x) * Math.sin(y) * Math.sin(z);
+    t_yaxis.z = Math.cos(z) * Math.sin(x) + Math.cos(x) * Math.sin(y) * Math.sin(z);
+
+
+    var t_camPosition = camera.position;
+    var t_camToIslandDistance = t_camPosition.dot(t_zaxis);
+
+    for (var i = 0; i < m_cssObjectsTemp.length; i++)
+    {
+        var t_object = m_cssObjectsTemp[i];
+
+        t_object.element.time = t_object.element.time + 0.04;
+        t_object.rotation.x = t_camRotation.x;
+        t_object.rotation.y = t_camRotation.y;
+        t_object.rotation.z = t_camRotation.z;
+
+        if (t_object.element.time <= 6.0)
+        {
+            t_object.position.x = t_zaxis.x * (t_object.element.time) / 7 * t_camToIslandDistance + t_yaxis.x * 1100;
+            t_object.position.y = t_zaxis.y * (t_object.element.time) / 7 * t_camToIslandDistance + t_yaxis.y * 1100;
+            t_object.position.z = t_zaxis.z * (t_object.element.time) / 7 * t_camToIslandDistance + t_yaxis.z * 1100;
+        }
+        else if (t_object.element.time <= 8.0)
+        {
+
+        }
+        else
+        {
+            t_object.element.style.backgroundColor = 'rgba(255,255,255,' + (CSS_ALPHA * (1-(t_object.element.time-8))) + ')';
+        }
+
+        if (t_object.element.time >= 9)
+        {
+            var t_moveObject = m_cssObjectsTemp.shift();
+            m_cssObjects.push(t_moveObject);
+        }
+    }
 }
 
 // ===================================================================================================
@@ -620,6 +734,53 @@ function AddLights()
 	sceneGL.add(dirLight);
 }
 
+
+// ===================================================================================================
+function AddsceneCSSElementsTemp(a_id, a_text)
+{
+    var element = document.createElement( 'div' );
+    element.className = 'element';
+    element.style.backgroundColor = 'rgba(255,255,255,' + (CSS_ALPHA) + ')';
+    element.style.width = "200px";
+    element.style.height = "200px";
+
+    var symbol = document.createElement( 'div' );
+    symbol.className = 'symbol';
+    symbol.textContent = a_id;
+    element.appendChild( symbol );
+
+    var details = document.createElement( 'div' );
+    details.className = 'details';
+    details.innerHTML = a_text;
+    element.appendChild( details );
+
+    element.Selected = 0;
+    element.time = 0;
+
+    // Determine the camera rotation matrix
+    t_camRotation = camera.rotation;
+    var x = t_camRotation.x;
+    var y = t_camRotation.y;
+    var z = t_camRotation.z;
+    var t_yaxis = new THREE.Vector3();
+    t_yaxis.x = -Math.cos(y) * Math.sin(z);
+    t_yaxis.y = Math.cos(x) * Math.cos(z) - Math.sin(x) * Math.sin(y) * Math.sin(z);
+    t_yaxis.z = Math.cos(z) * Math.sin(x) + Math.cos(x) * Math.sin(y) * Math.sin(z);
+
+
+    var object = new THREE.CSS3DObject( element );
+    object.position.x = t_yaxis.x * 1100;
+    object.position.y = t_yaxis.y * 1100;
+    object.position.z = t_yaxis.z * 1100;
+    sceneCSS.add( object );
+
+    m_cssObjectsTemp.push(object);
+
+    element.parent = object;
+    object.element.onclick = function () { GetCSSElementInfo(this); };
+}
+
+
 // ===================================================================================================
 function AddsceneCSSElementsIndividual(a_id, a_text)
 {
@@ -707,6 +868,19 @@ function GetCSSElementInfo(element)
     console.log(element.children[1].innerHTML);
 
     element.Selected = 1;
+
+    var like = document.getElementById("like");
+    //window.alert(like);
+    like.style.visibility = "";
+    //like.onclick = function(){
+    //
+    //    $.ajax({url: "/like/" + object.id, success: function(result){
+    //        $("#currentVotes").innerHTML(result);
+    //    }});
+    //
+    //};
+    //like.addEventListener('click', likelistener(event) ,false);
+    //if (prevLikeListener == nil){}
 }
 
 // ===================================================================================================

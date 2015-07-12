@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'voices#vr'
 
+  get 'like/:id' => 'voices#like'
+  get 'dislike/:id' => 'voices#dislike'
   get 'population2014/' => 'voices#population2014'
   get 'viewVoices/' => 'voices#viewVoices'
   get 'downvotevoice/:id' => 'voices#downvote'
