@@ -7,163 +7,6 @@ var CSS_ALPHA = 0.6;
 
 var g_mapScaleFactor = 400;
 
-var table = [
-    ["hello", "1"],
-    ["IT's SG50!!", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-    ["", ""],
-
-];
 
 //-----------------Ajax call to retrieve voices
 
@@ -192,6 +35,13 @@ function worker() {
                 //table[i][1] = data[i].id;
                 if (data[i].id > highestID){
 
+                    if (m_cssObjects.length >= 150)
+                    {
+                        var garbage = m_cssObjects.shift();
+
+                        sceneCSS.remove(garbage);
+
+                    }
                     //queue.push(data[i]);
                     AddsceneCSSElementsIndividual(data[i].id,data[i].text);
                     highestID = data[i].id;
@@ -257,7 +107,7 @@ function Init()
 	
 	// Add the camera
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 50000);
-    camera.position.set(0 * g_mapScaleFactor, 2.8 * g_mapScaleFactor, 9 * g_mapScaleFactor);
+    camera.position.set(0 * g_mapScaleFactor, 2.8 * g_mapScaleFactor, 10 * g_mapScaleFactor);
 	
 	// Create the WebGL Renderer
 	rendererGL = new THREE.WebGLRenderer();
@@ -529,7 +379,13 @@ function CheckCommentObjectTransparency()
             t_object.element.style.backgroundColor = 'rgba(255,255,255,' + (CSS_ALPHA) + ')';
             t_object.element.children[0].style.color = 'rgba(255,255,255,' + (CSS_ALPHA) + ')';
             t_object.element.children[1].style.color = 'rgba(255,255,255,' + (CSS_ALPHA) + ')';
-            t_object.element.style.border = '5px solid rgba(255,255,255,1)';
+
+            if (t_object.element.Selected == 0) {
+                t_object.element.style.border = '5px solid rgba(255,255,255,1)';
+            }
+            else{
+                t_object.element.style.border = '30px solid rgba(255,0,0,1)';
+            }
         }
 
     }
@@ -779,6 +635,8 @@ function AddsceneCSSElementsIndividual(a_id, a_text)
         symbol.textContent = a_id;
         element.appendChild( symbol );
 
+        element.Selected = 0;
+
         var details = document.createElement( 'div' );
         details.className = 'details';
         details.innerHTML = a_text;
@@ -841,8 +699,14 @@ function AddsceneCSSElements()
 // ===================================================================================================
 function GetCSSElementInfo(element)
 {
-    console.log(element.children[2].innerHTML);
-    element.style.border = '30px solid rgba(255,255,255,1.0)';
+    console.log("Selected!");
+    element.style.border = '70px solid rgba(255,0,0,1.0)';
+    var enlargedtextbox = document.getElementById("enlargedcomment");
+    enlargedtextbox.className = "enlargedcomment";
+    enlargedtextbox.innerHTML = element.children[1].innerHTML;
+    console.log(element.children[1].innerHTML);
+
+    element.Selected = 1;
 }
 
 // ===================================================================================================
