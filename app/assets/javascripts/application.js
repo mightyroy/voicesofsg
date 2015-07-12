@@ -10,14 +10,14 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require VRControls
+//= require OrbitControls
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.turbolinks
 //= require three.min
-//= require VRControls
 //= require VREffect
-//= require OrbitControls
 //= require OBJLoader
 //= require tween.min
 //= require CSS3DRenderer
