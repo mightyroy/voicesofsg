@@ -318,7 +318,7 @@ function onMouseDown( event )
                 //Roy stuff here
                 var popBox = document.getElementById("populationDisplay");
                 popBox.innerHTML = populationArray[m_intersectMapObjectName ]["district"] + "<br>" +populationArray[m_intersectMapObjectName ]["population"] + " people" ;
-                window.alert(populationArray[m_intersectMapObjectName ]["district"]);
+                //window.alert(populationArray[m_intersectMapObjectName ]["district"]);
             }
         });
     }

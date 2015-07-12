@@ -11,7 +11,6 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 Rails.application.config.assets.precompile += %w( CSS3DRenderer.js )
-
 Rails.application.config.assets.precompile += %w( OBJLoader.js )
 Rails.application.config.assets.precompile += %w( OrbitControls.js )
 Rails.application.config.assets.precompile += %w( three.min.js )
