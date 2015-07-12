@@ -17,6 +17,9 @@
 //= require three.min
 //= require VRControls
 //= require VREffect
-//= require d3
-//= require topojson
-//= require datamaps
+//= require OrbitControls
+//= require OBJLoader
+//= require tween.min
+//= require CSS3DRenderer
+//= require TrackballControls
+//= require main.js

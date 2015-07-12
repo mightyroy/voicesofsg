@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>three.js css3d - periodic table</title>
+		<style>
+			html, body {
+				height: 100%;
+			}
+
+			body {
+				background-color: #000000;
+				margin: 0;
+				font-family: Arial;
+				overflow: hidden;
+			}
+
+			a {
+				color: #ffffff;
+			}
+
+			/*Roy Stuff here*/
+			#populationDisplay {
+				position: absolute;
+				font-family: "avenir next";
+				font-size: 40px;
+				bottom: 10px;
+				right:30px;
+				height:200px;
+				width:600px;
+				color: rgba(255,255,255,0.75);
+				text-align: right;
+
+				background: transparent;
+
+				border: 0px;
+				padding: 5px 10px;
+			}
+
+			#info {
+				position: absolute;
+				width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				font-weight: bold;
+				text-align: center;
+			}
+
+			#menu {
+				position: absolute;
+				bottom: 20px;
+				width: 100%;
+				text-align: center;
+			}
+
+            .backplane {
+				width: 140px;
+				height: 180px;
+				box-shadow: 0px 0px 20px rgba(0,255,255,0.0);
+				border: 1px solid rgba(127,255,255,0.25);
+				cursor: default;
+			}
+
+			.element {
+				width: 140px;
+				height: 180px;
+				box-shadow: 0px 0px 20px rgba(0,255,255,0.0);
+				border: 1px solid rgba(127,255,255,0.25);
+				cursor: default;
+			}
+
+			
+
+				.element .number {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+					font-size: 20px;
+					color: rgba(127,255,255,0.75);
+				}
+
+				.element .symbol {
+					position: absolute;
+					top: 40px;
+					width: 100%;
+					font-size: 20px;
+					text-align: center;
+					color: rgba(0,0,0,0.75);
+					font-weight: bold;
+
+					-webkit-filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+					-moz-filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+					-o-filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+					-ms-filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+					filter: drop-shadow(0px 0px 20px rgba(0,255,255,0.95));
+				}
+
+				.element .details {
+					position: absolute;
+					top: 125px;
+					width: 100%;
+					font-size: 15px;
+					text-align: center;
+					color: rgba(0,0,0,0.75);
+				}
+
+			button {
+				color: rgba(127,255,255,0.75);
+				background: transparent;
+				outline: 1px solid rgba(127,255,255,0.75);
+				border: 0px;
+				padding: 5px 10px;
+				cursor: pointer;
+			}
+			button:hover {
+				background-color: rgba(0,255,255,0.5);
+			}
+			button:active {
+				color: #000000;
+				background-color: rgba(0,255,255,0.75);
+			}
+		</style>
+	</head>
+	<body>
+	<div id="populationDisplay"> </div>
+	</body>
+
+	<script>
+		var populationArray =[];
+		$.ajax({
+			dataType: "json",
+			url: "population2014.json",
+			mimeType: "application/json",
+			success: function(result){
+				populationArray = result;
+				window.alert(populationArray.length);
+			}
+		});
+		</script>
+
+	<!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/three.min.js"></script>-->
+	<!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/OrbitControls.js"></script>-->
+	<!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/OBJLoader.js"></script>-->
+	<!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/tween.min.js"></script>-->
+	<!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/CSS3DRenderer.js"></script>-->
+    <!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/TrackballControls.js"></script>-->
+    <!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/VRControls.js"></script>-->
+    <!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/VREffect.js"></script>-->
+
+
+	<!--<div id="container">-->
+		<!--<div id="menu">-->
+			<!--<button id="table">TABLE</button>-->
+			<!--<button id="sphere">SPHERE</button>-->
+			<!--<button id="helix">HELIX</button>-->
+			<!--<button id="grid">GRID</button>-->
+        <!--</div>-->
+	<!--</div>-->
+	<!-- -->
+	<!--<script src="../../../../../../Desktop/singapore-vr-6-2-1/js/main.js"></script>-->
+</html>

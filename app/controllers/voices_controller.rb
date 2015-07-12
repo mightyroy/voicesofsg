@@ -1,5 +1,14 @@
 class VoicesController < ApplicationController
 
+  def population2014
+    @@data = File.read("~/assets/javascripts/population2014.json")
+    render :json => @@data
+  end
+
+  def index
+
+  end
+
   def upvote
     @voice = Voice.find(params[:id])
     @voice.update_attribute(:votes, @voice.votes + 1)
