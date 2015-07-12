@@ -1,7 +1,25 @@
 class VoicesController < ApplicationController
 
+  def upvote
+    @voice = Voice.find(params[:id])
+    @voice.update_attribute(:votes, @voice.votes + 1)
+
+    #If you don't want render anything at all, you should use render :nothing => true option
+    render :nothing => true
+  end
+
+  def downvote
+    @voice = Voice.find(params[:id])
+    @voice.update_attribute(:votes, @voice.votes - 1)
+
+    #If you don't want render anything at all, you should use render :nothing => true option
+    render :nothing => true
+
+  end
+
   def applewatchsubmit
     @voice = Voice.new(voice_params)
+    @voice.votes = 0
     if @voice.save
       redirect_to :action => "applewatch", :alert => "Sumbit Success"
     else
@@ -31,8 +49,9 @@ class VoicesController < ApplicationController
 
   def submit
     @voice = Voice.new(voice_params)
+    @voice.votes = 0
     if @voice.save
-      redirect_to :action => "create", :alert => "Sumbit Success"
+      redirect_to :action => "create", :alert => "Submit Success"
     else
       render :create
     end
