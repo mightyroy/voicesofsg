@@ -1,3 +1,5 @@
 Ruby on rails build for Voices of SG hackathon submission.
+
 Rotating 3D globe on firefox browser for VR perception of world news event occurences in 3D.
+
 Team mates - Bo Peng , Quek Zhanfan, Roy Chan
